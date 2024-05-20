@@ -9,17 +9,20 @@ func CanSortBalls(n int, containers [][]int) bool {
 	TotalBallsByColor := make([]int, n)
 	TotalBallsByContainer := make([]int, n)
 
-	for containerNumber := 0; containerNumber < n; containerNumber++ {
-		for colorNumber := 0; colorNumber < n; colorNumber++ {
+	for containerNumber := range TotalBallsByContainer {
+		for colorNumber := range TotalBallsByColor {
 			TotalBallsByColor[colorNumber]		   += containers[containerNumber][colorNumber]
 			TotalBallsByContainer[containerNumber] += containers[containerNumber][colorNumber]
 		}
 	}
 
+// If we can construct a bijection between the number of balls of each color
+// and the number of balls in each container, sorting is possible
+
 	sort.Ints(TotalBallsByColor)
 	sort.Ints(TotalBallsByContainer)
 
-	for i := 0; i < n; i++ {
+	for i := range TotalBallsByColor {
 		if TotalBallsByColor[i] != TotalBallsByContainer[i] {
 			return false
 		}
@@ -32,9 +35,9 @@ func main() {
 	fmt.Scan(&n)
 
 	containers := make([][]int, n)
-	for containerNumber := 0; containerNumber < n; containerNumber++ {
+	for containerNumber := range containers {
 		containers[containerNumber] = make([]int, n)
-		for colorNumber := 0; colorNumber < n; colorNumber++ {
+		for colorNumber := range containers[containerNumber] {
 			fmt.Scan(&containers[containerNumber][colorNumber])
 		}
 	}
